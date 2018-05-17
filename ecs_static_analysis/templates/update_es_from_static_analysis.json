@@ -1,0 +1,67 @@
+[
+    {
+        "name": "UpdateElasticSearchFromTarball",
+        "image": ${image},
+        "cpu": 512,
+        "environment": [
+            {
+                "name": "aws_region",
+                "value": ${aws_region}
+            },
+            {
+                "name": "report_pat",
+                "value": ${report_pat}
+            },
+            {
+                "name": "cppcheck_pat",
+                "value": ${cppcheck_pat}
+            },
+            {
+                "name": "email_pat",
+                "value": ${email_pat}
+            },
+            {
+                "name": "slack_pat",
+                "value": ${slack_pat}
+            },
+            {
+                "name": "slack_team",
+                "value": ${slack_team}
+            },
+            {
+                "name": "slack_bot",
+                "value": ${slack_bot}
+            },
+            {
+                "name": "slack_token",
+                "value": ${slack_token}
+            },
+            {
+                "name": "es_endpoint",
+                "value": ${es_endpoint}
+            },
+            {
+                "name": "chunk_size",
+                "value": ${chunk_size}
+            },
+            {
+                "name": "ses_registered_address",
+                "value": ${ses_registered_address}
+            },
+            {
+                "name": "sqs_queue",
+                "value": ${sqs_queue}
+            }
+        ],
+        "memory": 1024,
+        "essential": true,
+	"logConfiguration": {
+		"logDriver": "awslogs",
+		"options": {
+			"awslogs-group": ${awslogs_group},
+			"awslogs-region": ${aws_region},
+			"awslogs-stream-prefix": "static-analysis-"
+		}
+	}
+    }
+]

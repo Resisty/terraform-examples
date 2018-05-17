@@ -1,0 +1,3 @@
+rabbitmq_host: localhost
+redis_host: localhost
+sensu_api_host: localhost

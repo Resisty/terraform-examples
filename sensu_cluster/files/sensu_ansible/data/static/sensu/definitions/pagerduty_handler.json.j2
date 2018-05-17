@@ -1,0 +1,10 @@
+{
+  "handlers": {
+    "pushover": {
+      "type": "pipe",
+      "command": "/opt/sensu/embedded/bin/handler-pagerduty.rb",
+      "timeout": 10,
+      "severites": ["critical"]
+    }
+  }
+}

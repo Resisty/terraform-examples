@@ -1,0 +1,5 @@
+*
+!.gitignore
+!requirements.txt
+!build_and_zip.sh
+!ansible_kick.py

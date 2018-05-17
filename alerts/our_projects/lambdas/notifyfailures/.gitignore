@@ -1,0 +1,8 @@
+*.dist-info/
+__pycache__/
+certifi/
+chardet/
+idna/
+requests/
+urllib3/
+yaml/

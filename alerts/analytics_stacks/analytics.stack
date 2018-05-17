@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Apache Log Analytics implemtation using KinesisAnalytics via CloudFormation"
+Parameters:
+  InputStream:
+    Type: String
+  OutputStream:
+    Type: String
+  ApplicationCode0:
+    Type: String
+  Role:
+    Type: String
+  StackAppName:
+    Type: String
+Resources:
+  BasicApplication:
+    Type: "AWS::KinesisAnalytics::Application"
+    Properties:
+      ApplicationName:
+        Ref: StackAppName
+      ApplicationDescription: "Analyze Test Stream"
+      ApplicationCode:
+        Fn::Join:
+          - ''
+          - - Ref: ApplicationCode0
+      Inputs:
+        - NamePrefix: "SOURCE_SQL_STREAM"
+          InputSchema:
+            RecordColumns:
+             - Name: "message"
+               SqlType: "VARCHAR(256)"
+               Mapping: "$.message"
+             - Name: "log_file"
+               SqlType: "VARCHAR(128)"
+               Mapping: "$.log_file"
+             - Name: "gen_host"
+               SqlType: "VARCHAR(128)"
+               Mapping: "$.gen_host"
+             - Name: "job_id"
+               SqlType: "VARCHAR(64)"
+               Mapping: "$.job_id"
+             - Name: "COL_time"
+               SqlType: "TIMESTAMP"
+               Mapping: "$.time"
+             - Name: "tag"
+               SqlType: "VARCHAR(128)"
+               Mapping: "$.tag"
+            RecordFormat:
+              RecordFormatType: "JSON"
+              MappingParameters:
+                JSONMappingParameters:
+                  RecordRowPath: "$"
+            RecordEncoding: "UTF-8"
+          KinesisStreamsInput:
+            ResourceARN:
+              Ref: InputStream
+            RoleARN:
+              Ref: Role
+  BasicApplicationOutputs:
+    Type: "AWS::KinesisAnalytics::ApplicationOutput"
+    DependsOn: BasicApplication
+    Properties:
+      ApplicationName:
+        Ref: BasicApplication
+      Output:
+        DestinationSchema:
+          RecordFormatType: "JSON"
+        KinesisStreamsOutput:
+          ResourceARN:
+           Ref: OutputStream
+          RoleARN:
+           Ref: Role
+        Name : "DESTINATION_SQL_STREAM"

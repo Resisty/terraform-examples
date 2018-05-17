@@ -1,0 +1,10 @@
+__pycache__/
+certifi/
+chardet/
+idna/
+requests/
+slackclient/
+urllib3/
+websocket/
+*.dist-info/
+six.py

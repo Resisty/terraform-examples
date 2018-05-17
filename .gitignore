@@ -1,0 +1,15 @@
+*.zip
+lib/
+include/
+.Python
+pip-selfcheck.json
+bin/
+*.pyc
+terraform.tfvars
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+*.tfstate.*.backup
+remote_config.tf
+tfplan

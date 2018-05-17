@@ -1,0 +1,29 @@
+  - hosts: sensu_masters
+    vars:
+      aws_region: "{{ var_region | default('us-west-2') }}"
+      kms_key: arn:aws:kms:us-west-2:REDACTED:key/REDACTED_TOO
+      sensu_remote_plugins:
+        - sensu
+        - http
+        - process-checks
+        - memory-checks
+        - network-checks
+        - load-checks
+        - cpu-checks
+        - disk-checks
+        - aws
+        - pagerduty
+        - slack
+
+    roles:
+      - role: sensu.sensu
+        sensu_master: true
+        sensu_include_dashboard: true  
+        uchiwa_auth_privatekey: "{{ sensu_config_path }}/uchiwa.rsa"
+        uchiwa_auth_publickey: "{{ sensu_config_path }}/uchiwa.rsa.pub"
+        uchiwa_users:
+          - username: admin
+            password: "{{ 'LONG_CIPHER' | kms_decrypt }}"
+    tasks:
+    - include_tasks: tasks/rabbitmq_autocluster.yml
+    - include_tasks: tasks/create_uchiwa_keys.yml

@@ -1,0 +1,24 @@
+---
+remote_state_bucket: logs-remote-state
+elasticsearch_domain_name: logs-test
+elasticsearch_version: 5.5
+elasticsearch_instance_type: m4.large.elasticsearch
+elasticsearch_instance_count: 2
+elasticsearch_ebs_type: standard
+elasticsearch_ebs_size: 100
+
+# SNS Subscriptions do not fully support PagerDuty 
+# CloudWatch integrations, see https://github.com/hashicorp/terraform/issues/2776
+# ARN created via console, hardcoded here
+logs_metrics_alarms_sub_arn: arn:aws:sns:us-west-2:REDACTED:logs-metrics-alarms
+devops_route53_zone: example.com
+
+allowed_cidrs:
+  - 0.0.0.0/28
+
+nexus_vpc_cidr: 172.16.0.0/24
+nexus_vpc_subnet_cidrs:
+  us-west-2a: 172.16.0.0/28
+  us-west-2b: 172.16.0.16/28
+
+sensu_cluster_vpc_cidr: 172.16.1.0/24

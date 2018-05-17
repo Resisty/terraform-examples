@@ -1,0 +1,6 @@
+[sensu_masters]
+localhost
+[redis_masters]
+localhost
+[rabbitmq_masters]
+localhost

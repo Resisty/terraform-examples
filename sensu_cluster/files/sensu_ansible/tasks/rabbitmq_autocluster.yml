@@ -1,0 +1,15 @@
+---
+  # Allow rabbitmq to use AWS autodiscovery backend
+  - name: Enable AWS autodiscovery plugin
+    command: rabbitmq-plugins --offline enable rabbitmq_peer_discovery_aws
+
+  # Configure rabbitmq to use AWS autodiscovery backend
+  - name: Deploy RabbitMQ config
+    template:
+      dest: "{{ rabbitmq_config_path }}/rabbitmq.config"
+      src: templates/rabbitmq_custom_config.j2
+      owner: root
+      group: "{{ __root_group }}"
+      mode: 0644
+    notify: restart rabbitmq service
+

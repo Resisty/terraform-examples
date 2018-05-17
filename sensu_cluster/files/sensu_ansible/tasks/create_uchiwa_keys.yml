@@ -1,0 +1,18 @@
+---
+  - name: Create Uchiwa private key
+    copy: 
+      content: "{{ 'BIGASS_CIPHER' | kms_decrypt }}"
+      dest: "{{ sensu_config_path }}/uchiwa.rsa"
+      owner: uchiwa
+      group: uchiwa
+      mode: 0600
+    notify: restart uchiwa service
+
+  - name: Create Uchiwa public key
+    copy: 
+      content: "{{ 'BIGGERASS_CIPHER' | kms_decrypt }}"
+      dest: "{{ sensu_config_path }}/uchiwa.rsa.pub"
+      owner: uchiwa
+      group: uchiwa
+      mode: 0600
+    notify: restart uchiwa service

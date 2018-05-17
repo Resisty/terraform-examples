@@ -1,0 +1,43 @@
+[
+    {
+        "name": ${container_name},
+        "image": ${image},
+        "cpu": 512,
+        "environment": [
+            {
+                "name": "aws_region",
+                "value": ${aws_region}
+            }
+        ],
+        "memory": 2048,
+        "essential": true,
+        "portMappings": [
+          {
+            "containerPort": ${containerport},
+            "hostPort": ${hostport}
+          }
+        ],
+        "mountPoints": [
+          {
+            "sourceVolume": "efs",
+            "containerPath": "/nexus-data",
+            "readOnly": false
+          }
+        ],
+	"ulimits": [
+	  {
+	    "name": "nofile",
+	    "softLimit": 65536,
+	    "hardLimit": 65536
+	  }
+	],
+	"logConfiguration": {
+		"logDriver": "awslogs",
+		"options": {
+			"awslogs-group": ${awslogs_group},
+			"awslogs-region": ${aws_region},
+			"awslogs-stream-prefix": "nexus-repository-"
+		}
+	}
+    }
+]

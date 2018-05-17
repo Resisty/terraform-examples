@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "nexus_http_check": {
+      "command": "{{ sensu_config_path }}/plugins/nexus-http-check.sh",
+      "subscribers": [
+        "sensu_masters"
+      ],
+      "handlers": [
+        "pagerduty"
+      ],
+      "interval": 60,
+      "ttl": 180,
+      "ttl_status": 1,
+      "timeout": 10
+    }
+  }
+}
